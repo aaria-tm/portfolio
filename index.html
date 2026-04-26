@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarya Londhe | Portfolio</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+        /* --- ROOT VARIABLES --- */
+        :root {
+            --bg-color: #0f0b08; 
+            --second-bg-color: #1a1510; 
+            --card-bg: #2b2118;
+            --overlay-bg: rgba(43, 33, 24, 0.98);
+            --text-color: #f3e5ab; 
+            --main-color: #d2a679; 
+            --glow-color: #ffcf96; 
+            --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.3s ease;
+        }
+
+        /* --- GLOBAL RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100000;
+        }
+
+        .loader-content { text-align: center; width: 100%; }
+
+        .loader-title {
+            font-size: 7rem;
+            letter-spacing: 2rem;
+            color: var(--main-color);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .percentage {
+            font-size: 4.5rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            color: var(--text-color);
+            font-family: monospace;
+        }
+
+        .progress-container {
+            width: 500px;
+            height: 2px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto 2.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--main-color);
+            box-shadow: 0 0 30px var(--main-color);
+            transition: width 0.1s linear;
+        }
+
+        #status-text {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6rem;
+            color: var(--main-color);
+            opacity: 0.8;
+            font-weight: 500;
+            height: 20px;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 2.5rem 9%;
+            background: rgba(15, 11, 8, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(210, 166, 121, 0.1);
+        }
+
+        .logo {
+            font-size: 3.2rem;
+            color: var(--text-color);
+            font-weight: 800;
+        }
+
+        .logo span { color: var(--main-color); }
+
+        .navbar a {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-left: 4.5rem;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 2px;
+            bottom: -5px; left: 0;
+            background: var(--main-color);
+            transition: var(--transition-fast);
+        }
+
+        .navbar a:hover::after, .navbar a.active::after { width: 100%; }
+        .navbar a:hover, .navbar a.active { color: var(--main-color); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10rem;
+            min-height: 100vh;
+            padding: 15rem 9% 10rem;
+        }
+
+        .hero-content { flex: 1.2; }
+
+        .hero-content h3 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--main-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 {
+            font-size: 8.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-content p {
+            font-size: 2rem;
+            color: #c9bc9c;
+            margin-bottom: 5rem;
+            max-width: 650px;
+        }
+
+        .btn-box {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            padding: 1.8rem 4.5rem;
+            background: var(--main-color);
+            border: 2px solid var(--main-color);
+            border-radius: 1.2rem;
+            font-size: 1.8rem;
+            color: var(--bg-color);
+            font-weight: 700;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--main-color);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(210, 166, 121, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--main-color);
+        }
+
+        .hero-img {
+            flex: 0.8;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hero-img img {
+            width: 35vw;
+            max-width: 450px;
+            border-radius: 50%;
+            border: 12px solid var(--main-color);
+            padding: 12px;
+            background: var(--bg-color);
+            box-shadow: 0 0 80px rgba(210, 166, 121, 0.1);
+            animation: profileFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* --- CARDS ARCHITECTURE (Services & Projects) --- */
+        .section-title {
+            text-align: center;
+            font-size: 5.5rem;
+            font-weight: 800;
+            margin-bottom: 8rem;
+        }
+
+        .section-title span { color: var(--main-color); }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 4rem;
+        }
+
+        .reveal-card {
+            position: relative;
+            height: 420px;
+            background: var(--card-bg);
+            border-radius: 3rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem;
+            border: 1px solid rgba(210, 166, 121, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .reveal-card i {
+            font-size: 7.5rem;
+            color: var(--main-color);
+            margin-bottom: 3rem;
+            transition: var(--transition-smooth);
+        }
+
+        .reveal-card h3 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Hover Overlay Logic */
+        .card-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--overlay-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-card:hover .card-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-card:hover i {
+            transform: scale(0.5) translateY(-50px);
+            opacity: 0.1;
+        }
+
+        .card-overlay p {
+            font-size: 1.7rem;
+            color: #f3e5ab;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+        /* This targets the titles in your project grid */
+.reveal-card h4 {
+    font-size: 3.2rem; /* Increase this number to make it bigger */
+    font-weight: 800;   /* Makes the text bolder */
+    margin-top: 2rem;   /* Space between the icon and the text */
+    letter-spacing: 1px;
+    color: var(--text-color); /* Ensures it stays in your beige/brown theme */
+}
+
+        /* --- WHAT I DO SECTION --- */
+        .what-i-do {
+            padding: 12rem 9%;
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .projects {
+            background: var(--second-bg-color);
+            padding: 12rem 9%;
+        }
+
+        .btn-live {
+            padding: 1.2rem 3rem;
+            font-size: 2rem;
+            border-radius: 0.8rem;
+        }
+
+        /* --- SKILLS SECTION --- */
+        .skills {
+            padding: 12rem 9%;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        .skill-item {
+            background: var(--second-bg-color);
+            padding: 1.8rem 4rem;
+            border-radius: 5rem;
+            border: 2px solid var(--main-color);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--main-color);
+            transition: var(--transition-smooth);
+            cursor: default;
+        }
+
+        .skill-item:hover {
+            background: var(--main-color);
+            color: var(--bg-color);
+            transform: scale(1.1);
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact {
+            padding: 12rem 9%;
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            margin: 6rem 0;
+        }
+
+        .social-icons a {
+            font-size: 4.5rem;
+            color: var(--text-color);
+            transition: var(--transition-smooth);
+        }
+
+        .social-icons a:hover {
+            color: var(--main-color);
+            transform: translateY(-15px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 6rem 9%;
+            background: #000;
+            text-align: center;
+            border-top: 1px solid #111;
+        }
+
+        footer p {
+            font-size: 1.6rem;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1200px) {
+            html { font-size: 55%; }
+            .hero { gap: 5rem; }
+        }
+
+        @media (max-width: 991px) {
+            .header { padding: 2rem 4%; }
+            section { padding: 10rem 4%; }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 20rem; }
+            .hero-img img { width: 60vw; }
+            .hero-content h1 { font-size: 6rem; }
+            .btn-box { justify-content: center; }
+            .navbar { display: none; }
+            .progress-container { width: 90%; }
+        }
+        @media (max-width: 768px) {
+    .reveal-card h4 {
+        font-size: 2.4rem; /* Smaller size for mobile devices */
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-title">WELCOME</div>
+            <div class="percentage" id="percent-count">0%</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="bar"></div>
+            </div>
+            <div id="status-text">INITIALIZING SYSTEMS...</div>
+        </div>
+    </div>
+
+    <header class="header">
+        <a href="#" class="logo">Aarya<span>.</span></a>
+        <nav class="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#what-i-do">What I Do</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Connect</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h3>BTech ECS Student</h3>
+            <h1>Aarya Londhe</h1>
+            <p>I design and build bridges between hardware and software. Specializing in high-end web development and embedded systems architecture.</p>
+            <div class="btn-box">
+                <a href="assets/resume.pdf" download class="btn">
+                    Download Resume <i class="fas fa-file-pdf"></i>
+                </a>
+                <a href="#contact" class="btn btn-outline">Let's Connect</a>
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="assets/profile.jpg" alt="Aarya" onerror="this.src='https://via.placeholder.com/450/2b2118/f3e5ab?text=Aarya+Londhe'">
+        </div>
+    </section>
+
+    <section class="what-i-do" id="what-i-do">
+        <h2 class="section-title">What I <span>Do</span></h2>
+        <div class="card-container">
+            
+            <div class="reveal-card">
+                <i class="fas fa-swatchbook"></i>
+                <h3>Design</h3>
+                <div class="card-overlay">
+                    <p>I craft visually appealing and user-friendly interfaces that focus on clarity and engagement.
+My designs balance aesthetics with functionality to enhance overall user experience.</p>
+                </div>
+            </div>
+
+            <div class="reveal-card">
+                <i class="fas fa-layer-group"></i>
+                <h3>Develop</h3>
+                <div class="card-overlay">
+                    <p>I build responsive and efficient websites using modern web technologies.
+My focus is on clean code, performance, and seamless functionality across devices.</p>
+                </div>
+            </div>
+
+            <div class="reveal-card">
+                <i class="fas fa-project-diagram"></i>
+                <h3>Manage</h3>
+                <div class="card-overlay">
+                    <p>Overseeing technical architecture from initial circuit prototyping to the final software deployment phase.</p>
+                </div>
+            </div>
+
+            <div class="reveal-card">
+                <i class="fas fa-paper-plane"></i>
+                <h3>Launch</h3>
+                <div class="card-overlay">
+                    <p>Optimizing and deploying full-scale digital solutions that are ready for real-world user engagement and feedback.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="skills" id="skills">
+        <h2 class="section-title">Tech <span>Stack</span></h2>
+        <div class="skills-grid">
+            <div class="skill-item">HTML5</div>
+            <div class="skill-item">CSS</div>
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">Python</div>
+            <div class="skill-item">C Programming</div>
+            <div class="skill-item">Arduino C++</div>
+            <div class="skill-item">Embedded C</div>
+            <div class="skill-item">UI/UX Design</div>
+        </div>
+    </section>
+
+    <section class="projects" id="projects">
+        <h2 class="section-title">Featured <span>Work</span></h2>
+        <div class="card-container">
+            
+            <div class="reveal-card">
+                <i class="fas fa-hospital-alt"></i>
+                <h4>Hospital Queue Management</h4>
+                <div class="card-overlay">
+                    <p>An intelligent priority-based patient management system designed to eliminate wait-room congestion. (HTML, CSS, JS)</p>
+                    <a href="https://aaria-tm.github.io/hospitalqueuemanagement/" class="btn btn-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="reveal-card">
+                <i class="fas fa-user-clock"></i>
+                <h4>StudyBuddy</h4>
+                <div class="card-overlay">
+                    <p>A Pomodoro-integrated productivity tool focused on deep-work cycles and task management. (HTML, CSS, JS)</p>
+                    <a href="https://aaria-tm.github.io/studybuddy/" class="btn btn-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="reveal-card">
+                <i class="fas fa-cash-register"></i>
+                <h4>Billing Software</h4>
+                <div class="card-overlay">
+                    <p>Billing software that lets users add items with price and quantity, automatically calculates totals with GST, and generates downloadable bills.
+ (HTML, CSS, JS)</p>
+                    <a href="https://aaria-tm.github.io/billingagency/" class="btn btn-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="reveal-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h4>Shopping Site</h4>
+                <div class="card-overlay">
+                    <p>A premium e-commerce interface featuring fluid cart logic and luxury design principles. (HTML, CSS, JS)</p>
+                    <a href="https://aaria-tm.github.io/aarya24kt/" class="btn btn-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2 class="section-title">Get In <span>Touch</span></h2>
+        <p style="font-size: 2.2rem; opacity: 0.8;">Interested in collaborating on a project or internship?</p>
+        
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/aarya-londhe-baa9b9373?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/aaria-tm"><i class="fab fa-github"></i></a>
+            <a href="mailto:aaryaglondhe@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+        
+        <a href="mailto:aaryaglondhe@gmail.com" class="btn">Send a Message</a>
+    </section>
+
+    <footer>
+        <p>Aarya Londhe</p>
+    </footer>
+
+    <script>
+        /* --- PRELOADER LOGIC --- */
+        const statusMsgs = [
+            "Loading Pages...",
+            "Attaching Projects...",
+            "Uploading Resume...",
+            "Upgrading Skills...",
+            "Adding Socials..."
+        ];
+
+        let count = 0;
+        let msgIdx = 0;
+        const bar = document.getElementById('bar');
+        const percentText = document.getElementById('percent-count');
+        const statusText = document.getElementById('status-text');
+
+        const loadingInterval = setInterval(() => {
+            count += Math.floor(Math.random() * 3) + 1;
+            if (count > 100) count = 100;
+
+            bar.style.width = count + "%";
+            percentText.innerText = count + "%";
+
+            // Cycle through the specific subtitles
+            if (count > (msgIdx + 1) * (100 / statusMsgs.length)) {
+                if (statusMsgs[msgIdx]) {
+                    statusText.innerText = statusMsgs[msgIdx];
+                }
+                msgIdx++;
+            }
+
+            if (count === 100) {
+                clearInterval(loadingInterval);
+                statusText.innerText = "READY";
+                
+                setTimeout(() => {
+                    const preloader = document.getElementById('preloader');
+                    preloader.style.opacity = "0";
+                    setTimeout(() => preloader.style.display = "none", 1000);
+                }, 800);
+            }
+        }, 50);
+
+        /* --- SCROLL REVEAL CONFIGURATION --- */
+        const sr = ScrollReveal({
+            origin: 'bottom',
+            distance: '80px',
+            duration: 2000,
+            delay: 200,
+            reset: false
+        });
+
+        sr.reveal('.hero-content', { origin: 'left' });
+        sr.reveal('.hero-img', { origin: 'right', delay: 400 });
+        sr.reveal('.section-title', { origin: 'top' });
+        sr.reveal('.reveal-card', { interval: 200 });
+        sr.reveal('.skill-item', { interval: 100 });
+        sr.reveal('.social-icons', { delay: 300 });
+
+        /* --- NAVBAR ACTIVE HIGHLIGHT --- */
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.navbar a');
+
+        window.onscroll = () => {
+            sections.forEach(sec => {
+                const top = window.scrollY;
+                const offset = sec.offsetTop - 150;
+                const height = sec.offsetHeight;
+                const id = sec.getAttribute('id');
+
+                if (top >= offset && top < offset + height) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        document.querySelector('.navbar a[href*=' + id + ']').classList.add('active');
+                    });
+                }
+            });
+        };
+    </script>
+</body>
+</html>
