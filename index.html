@@ -417,6 +417,22 @@
             .hero { gap: 5rem; }
         }
 
+        /* --- MOBILE FIX FOR PRELOADER --- */
+@media (max-width: 480px) {
+    .loader-title {
+        font-size: 3.5rem;      /* Shrinks text from 6rem/7rem to 3.5rem */
+        letter-spacing: 0.8rem; /* Reduces the gap between letters */
+    }
+
+    .percentage {
+        font-size: 2.5rem;      /* Makes the % number slightly smaller */
+    }
+
+    .progress-container {
+        width: 80%;             /* Ensures the bar doesn't touch the edges */
+    }
+}
+
         @media (max-width: 991px) {
             .header { padding: 2rem 4%; }
             section { padding: 10rem 4%; }
